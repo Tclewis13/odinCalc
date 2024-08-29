@@ -4,14 +4,17 @@ let operator;
 let displayText = '';
 const regex = /\+|\-|\*|\//g;
 
-// run the tests against every element in the array
 
 
 const display = document.getElementById("display");
 
+const equalsButton = document.getElementById("=");
+
+const clearButton = document.getElementById("CLR");
+
 const buttons = document.querySelectorAll("button");
     buttons.forEach((button) => {
-        if(button.id !== '=' && button.id !== 'CLR'){
+        if(button.id !== '=' && button.id !== 'CLR' && button.id !== '+' && button.id !== '-' && button.id !== '/' && button.id !== '*'){
         button.addEventListener("click", function(e) {
             updateDisplay(button.id);
         });
@@ -21,21 +24,51 @@ const buttons = document.querySelectorAll("button");
 const operatorButtons = document.querySelectorAll(".operator");
     operatorButtons.forEach((button) => {
         button.addEventListener("click", function(e) {
-            console.log(((displayText.match(regex)) || []).length);
+            if (((displayText.match(regex)) || []).length >= 1){
+                parseDisplay();
+                displayText = displayText + button.id;
+                display.textContent = displayText;
+            }
+            else{
+                updateDisplay(button.id);
+            }
         });
     });
 
+equalsButton.addEventListener("click", function(e) {
+    parseDisplay();
+});
+
+clearButton.addEventListener("click", function(e) {
+    displayText = '';
+    display.textContent = displayText;
+});
+
 function add(firstNum, secondNum){
+    firstNum = parseInt(firstNum);
+    secondNum = parseInt(secondNum);
     return firstNum + secondNum;
 }
 function subtract(firstNum, secondNum){
+    firstNum = parseInt(firstNum);
+    secondNum = parseInt(secondNum);
     return firstNum - secondNum;
 }
 function multiply(firstNum, secondNum){
+    firstNum = parseInt(firstNum);
+    secondNum = parseInt(secondNum);
     return firstNum * secondNum;
 }
 function divide(firstNum, secondNum){
-    return firstNum / secondNum;
+    firstNum = parseInt(firstNum);
+    secondNum = parseInt(secondNum);
+    if (firstNum / secondNum == 'Infinity'){
+        return 'Bullshit. Press CLR to reset calculator.'
+    }
+    else{
+        return firstNum / secondNum;
+    }
+
 }
 
 function updateDisplay(buttonID){
@@ -43,17 +76,48 @@ function updateDisplay(buttonID){
     display.textContent = displayText;
 }
 
+function parseDisplay(){
+    let splitArray;
+    if(displayText.includes('+')){
+        splitArray = displayText.split('+');
+        if(splitArray[1] == ''){
+            displayText = splitArray[0];
+            display.textContent = displayText;
+        }
+        else{
+            displayText = operate(splitArray[0],splitArray[1],'+');
+            display.textContent = displayText;
+        }
+        
+    }
+    else if(displayText.includes('-')){
+        splitArray = displayText.split('-');
+        displayText = operate(splitArray[0],splitArray[1],'-');
+        display.textContent = displayText;
+    }
+    else if(displayText.includes('/')){
+        splitArray = displayText.split('/');
+        displayText = operate(splitArray[0],splitArray[1],'/');
+        display.textContent = displayText;
+    }
+    else if(displayText.includes('*')){
+        splitArray = displayText.split('*');
+        displayText = operate(splitArray[0],splitArray[1],'*');
+        display.textContent = displayText;
+    }
+}
+
 function operate(firstNum,secondNum,operator){
-    if(operator === 'add'){
+    if(operator === '+'){
         return (add(firstNum,secondNum));
     }
-    else if(operator === 'subtract'){
+    else if(operator === '-'){
         return (subtract(firstNum,secondNum));
     }
-    else if(operator === 'multiply'){
+    else if(operator === '*'){
         return (multiply(firstNum,secondNum));
     }
-    else if(operator === 'divide'){
+    else if(operator === '/'){
         return (divide(firstNum,secondNum));
     }
 }

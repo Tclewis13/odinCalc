@@ -16,6 +16,7 @@ button{
     width:520px;
     height: auto;
 }
+
 #display{
     display: flex;
     width:500px;
