@@ -2,6 +2,10 @@ let firstnum;
 let secondNum;
 let operator;
 let displayText = '';
+const regex = /\+|\-|\*|\//g;
+
+// run the tests against every element in the array
+
 
 const display = document.getElementById("display");
 
@@ -14,7 +18,12 @@ const buttons = document.querySelectorAll("button");
     }
     });
 
-
+const operatorButtons = document.querySelectorAll(".operator");
+    operatorButtons.forEach((button) => {
+        button.addEventListener("click", function(e) {
+            console.log(((displayText.match(regex)) || []).length);
+        });
+    });
 
 function add(firstNum, secondNum){
     return firstNum + secondNum;
