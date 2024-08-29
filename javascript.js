@@ -12,9 +12,11 @@ const equalsButton = document.getElementById("=");
 
 const clearButton = document.getElementById("CLR");
 
+const deleteButton = document.getElementById("DEL");
+
 const buttons = document.querySelectorAll("button");
     buttons.forEach((button) => {
-        if(button.id !== '=' && button.id !== 'CLR' && button.id !== '+' && button.id !== '-' && button.id !== '/' && button.id !== '*'){
+        if(button.id !== '=' && button.id !== 'CLR' && button.id !== '+' && button.id !== '-' && button.id !== '/' && button.id !== '*' && button.id !== 'DEL'){
         button.addEventListener("click", function(e) {
             updateDisplay(button.id);
         });
@@ -41,6 +43,11 @@ equalsButton.addEventListener("click", function(e) {
 
 clearButton.addEventListener("click", function(e) {
     displayText = '';
+    display.textContent = displayText;
+});
+
+deleteButton.addEventListener("click", function(e) {
+    displayText = displayText.substring(0, displayText.length - 1);
     display.textContent = displayText;
 });
 
