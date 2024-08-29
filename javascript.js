@@ -14,6 +14,8 @@ const clearButton = document.getElementById("CLR");
 
 const deleteButton = document.getElementById("DEL");
 
+const decimalButton = document.getElementById(".");
+
 const buttons = document.querySelectorAll("button");
     buttons.forEach((button) => {
         if(button.id !== '=' && button.id !== 'CLR' && button.id !== '+' && button.id !== '-' && button.id !== '/' && button.id !== '*' && button.id !== 'DEL'){
@@ -51,24 +53,25 @@ deleteButton.addEventListener("click", function(e) {
     display.textContent = displayText;
 });
 
+
 function add(firstNum, secondNum){
-    firstNum = parseInt(firstNum);
-    secondNum = parseInt(secondNum);
+    firstNum = parseFloat(firstNum);
+    secondNum = parseFloat(secondNum);
     return firstNum + secondNum;
 }
 function subtract(firstNum, secondNum){
-    firstNum = parseInt(firstNum);
-    secondNum = parseInt(secondNum);
+    firstNum = parseFloat(firstNum);
+    secondNum = parseFloat(secondNum);
     return firstNum - secondNum;
 }
 function multiply(firstNum, secondNum){
-    firstNum = parseInt(firstNum);
-    secondNum = parseInt(secondNum);
+    firstNum = parseFloat(firstNum);
+    secondNum = parseFloat(secondNum);
     return firstNum * secondNum;
 }
 function divide(firstNum, secondNum){
-    firstNum = parseInt(firstNum);
-    secondNum = parseInt(secondNum);
+    firstNum = parseFloat(firstNum);
+    secondNum = parseFloat(secondNum);
     if (firstNum / secondNum == 'Infinity'){
         return 'Bullshit. Press CLR to reset calculator.'
     }
@@ -99,18 +102,36 @@ function parseDisplay(){
     }
     else if(displayText.includes('-')){
         splitArray = displayText.split('-');
-        displayText = operate(splitArray[0],splitArray[1],'-');
-        display.textContent = displayText;
+        if(splitArray[1] == ''){
+            displayText = splitArray[0];
+            display.textContent = displayText;
+        }
+        else{
+            displayText = operate(splitArray[0],splitArray[1],'-');
+            display.textContent = displayText;
+        }
     }
     else if(displayText.includes('/')){
         splitArray = displayText.split('/');
-        displayText = operate(splitArray[0],splitArray[1],'/');
-        display.textContent = displayText;
+        if(splitArray[1] == ''){
+            displayText = splitArray[0];
+            display.textContent = displayText;
+        }
+        else{
+            displayText = operate(splitArray[0],splitArray[1],'/');
+            display.textContent = displayText;
+        };
     }
     else if(displayText.includes('*')){
         splitArray = displayText.split('*');
-        displayText = operate(splitArray[0],splitArray[1],'*');
-        display.textContent = displayText;
+        if(splitArray[1] == ''){
+            displayText = splitArray[0];
+            display.textContent = displayText;
+        }
+        else{
+            displayText = operate(splitArray[0],splitArray[1],'*');
+            display.textContent = displayText;
+        }
     }
 }
 
