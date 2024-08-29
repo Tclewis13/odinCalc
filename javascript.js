@@ -1,6 +1,20 @@
 let firstnum;
 let secondNum;
 let operator;
+let displayText = '';
+
+const display = document.getElementById("display");
+
+const buttons = document.querySelectorAll("button");
+    buttons.forEach((button) => {
+        if(button.id !== '=' && button.id !== 'CLR'){
+        button.addEventListener("click", function(e) {
+            updateDisplay(button.id);
+        });
+    }
+    });
+
+
 
 function add(firstNum, secondNum){
     return firstNum + secondNum;
@@ -13,6 +27,11 @@ function multiply(firstNum, secondNum){
 }
 function divide(firstNum, secondNum){
     return firstNum / secondNum;
+}
+
+function updateDisplay(buttonID){
+    displayText = displayText + buttonID;
+    display.textContent = displayText;
 }
 
 function operate(firstNum,secondNum,operator){
